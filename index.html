@@ -1682,6 +1682,221 @@
         transition: none !important
       }
     }
+
+    /* ===== Resume AI Analyzer ===== */
+    .resume-ai-teaser {
+      margin-top: 28px;
+      border: 1px solid rgba(139, 92, 246, .28);
+      background: linear-gradient(110deg, rgba(139, 92, 246, .10), rgba(34, 211, 238, .04));
+      border-radius: 18px;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px
+    }
+
+    .resume-ai-teaser h3 {
+      font-size: 1.2rem;
+      margin: 6px 0
+    }
+
+    .resume-ai-teaser p {
+      color: var(--muted);
+      font-size: .85rem;
+      max-width: 680px
+    }
+
+    .resume-ai-shell {
+      margin-top: 38px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .015));
+      overflow: hidden;
+      box-shadow: 0 35px 100px rgba(0, 0, 0, .28)
+    }
+
+    .resume-ai-head {
+      padding: 24px 26px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px
+    }
+
+    .resume-ai-head .status {
+      margin: 0
+    }
+
+    .resume-ai-head h3 {
+      font-size: 1.5rem;
+      margin-top: 10px
+    }
+
+    .ai-stack-note {
+      font: 500 .68rem "JetBrains Mono";
+      color: #a1a1aa;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 11px
+    }
+
+    .resume-ai-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr
+    }
+
+    .resume-ai-inputs {
+      padding: 26px;
+      border-right: 1px solid var(--line)
+    }
+
+    .resume-ai-inputs textarea {
+      min-height: 145px
+    }
+
+    .resume-ai-inputs .btn {
+      margin-top: 4px;
+      width: 100%
+    }
+
+    .ai-disclaimer {
+      font-size: .68rem;
+      color: #71717a;
+      margin-top: 10px;
+      text-align: center
+    }
+
+    .resume-ai-result {
+      padding: 26px;
+      background: radial-gradient(circle at 85% 5%, rgba(139, 92, 246, .12), transparent 38%)
+    }
+
+    .ai-score {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 23px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .score-ring {
+      width: 108px;
+      height: 108px;
+      flex: 0 0 108px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(#7c3aed 0deg, rgba(255, 255, 255, .07) 0deg);
+      position: relative
+    }
+
+    .score-ring:after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: #0d0d10
+    }
+
+    .score-ring span {
+      position: relative;
+      z-index: 1;
+      font-size: 1.55rem;
+      font-weight: 800
+    }
+
+    .result-label {
+      font: 600 .63rem "JetBrains Mono";
+      letter-spacing: .1em;
+      color: #a78bfa
+    }
+
+    .ai-score h4 {
+      font-size: 1.18rem;
+      margin: 7px 0 3px
+    }
+
+    .ai-score p {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.55
+    }
+
+    .result-block {
+      padding-top: 18px
+    }
+
+    .result-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 9px
+    }
+
+    .result-tags span {
+      font: 500 .65rem "JetBrains Mono";
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(34, 211, 238, .22);
+      background: rgba(34, 211, 238, .05);
+      color: #a5f3fc
+    }
+
+    .result-tags span.gap {
+      border-color: rgba(251, 191, 36, .25);
+      background: rgba(251, 191, 36, .05);
+      color: #fde68a
+    }
+
+    .result-tags .empty {
+      border-color: var(--line);
+      background: transparent;
+      color: #71717a
+    }
+
+    .next-step {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-top: 8px
+    }
+
+    .resume-ai-benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px
+    }
+
+    .resume-ai-benefits .card {
+      min-height: 170px
+    }
+
+    .resume-ai-benefits .card h3 {
+      margin-top: 26px
+    }
+
+    @media(max-width:850px) {
+      .resume-ai-grid {
+        grid-template-columns: 1fr
+      }
+
+      .resume-ai-inputs {
+        border-right: 0;
+        border-bottom: 1px solid var(--line)
+      }
+
+      .resume-ai-teaser {
+        align-items: flex-start;
+        flex-direction: column
+      }
+
+      .resume-ai-benefits {
+        grid-template-columns: 1fr
+      }
+    }
   </style>
 </head>
 
@@ -1691,8 +1906,8 @@
       <a class="logo" href="#home">Saurabh <b>Chavan</b></a>
       <div class="navlinks" id="navlinks">
         <a href="#work">Work</a><a href="#build">What I Build</a><a href="#about">About</a><a
-          href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a class="nav-cta"
-          href="#hire">Hire Me</a>
+          href="#skills">Skills</a><a href="#resume-ai">Resume AI</a><a href="#experience">Experience</a><a
+          href="#contact">Contact</a><a class="nav-cta" href="#hire">Hire Me</a>
       </div>
       <button class="menu" id="menu" aria-label="Open navigation">☰</button>
     </nav>
@@ -1847,7 +2062,7 @@
             </div>
           </article>
           <article class="project reveal">
-            <div class="project-visual"><img class="project-image" src="portfolio.png"
+            <div class="project-visual"><img class="project-image" src="/Images/Screenshot 2026-09-11 062050.png"
                 alt="portfolio project preview" loading="lazy"></div>
             <div class="project-body"><span class="project-index">03 / WEB</span>
               <h3>Personal Portfolio</h3>
@@ -1882,12 +2097,98 @@
             <div class="node">WEB UI<small>React</small></div>
           </div>
         </div>
+        <div class="resume-ai-teaser reveal">
+          <div>
+            <span class="kicker">FLAGSHIP FEATURE</span>
+            <h3>Resume AI Analyzer</h3>
+            <p>Compare a resume against a target job description and instantly surface the strongest matches and the
+              most important skill gaps.</p>
+          </div>
+          <a class="btn ai-btn" href="#resume-ai">Try Resume AI ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume-ai">
+      <div class="wrap">
+        <span class="kicker reveal">04 / RESUME AI ANALYZER</span>
+        <h2 class="section-title reveal">Turn a job description into an action plan.</h2>
+        <p class="section-copy reveal">Paste your resume and a target job description. This portfolio feature calculates
+          a transparent skill-match score, highlights matched technologies, and identifies gaps to improve before
+          applying.</p>
+
+        <div class="resume-ai-shell reveal">
+          <div class="resume-ai-head">
+            <div>
+              <span class="status"><i></i> LIVE PORTFOLIO FEATURE</span>
+              <h3>Resume AI Analyzer</h3>
+            </div>
+            <span class="ai-stack-note">Java · Spring Boot · AI-ready</span>
+          </div>
+
+          <div class="resume-ai-grid">
+            <div class="resume-ai-inputs">
+              <div class="field">
+                <label for="resumeText">YOUR RESUME</label>
+                <textarea id="resumeText" rows="11" placeholder="Paste your resume text here..."></textarea>
+              </div>
+              <div class="field">
+                <label for="jobText">TARGET JOB DESCRIPTION</label>
+                <textarea id="jobText" rows="11" placeholder="Paste the job description here..."></textarea>
+              </div>
+              <button class="btn primary" id="resumeAnalyzeBtn" type="button">Analyze Resume ↗</button>
+              <p class="ai-disclaimer">Demo mode: matching is performed locally in the browser. No resume text is sent
+                anywhere.</p>
+            </div>
+
+            <div class="resume-ai-result" aria-live="polite">
+              <div class="ai-score">
+                <div class="score-ring" id="resumeScoreRing"><span id="resumeScore">—</span></div>
+                <div>
+                  <span class="result-label">MATCH SCORE</span>
+                  <h4 id="resumeScoreTitle">Ready when you are</h4>
+                  <p id="resumeScoreText">Add both texts and run the analyzer.</p>
+                </div>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">MATCHED SKILLS</span>
+                <div class="result-tags" id="resumeMatched"><span class="empty">No analysis yet</span></div>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">SKILL GAPS</span>
+                <div class="result-tags" id="resumeGaps"><span class="empty">No analysis yet</span></div>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">RECOMMENDATION</span>
+                <p class="next-step" id="resumeRecommendation">Your recommendation will appear here after analysis.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="resume-ai-benefits">
+          <div class="card reveal"><span class="num">01</span>
+            <h3>Transparent scoring</h3>
+            <p>See exactly which detected job skills are covered by your resume.</p>
+          </div>
+          <div class="card reveal"><span class="num">02</span>
+            <h3>Actionable gaps</h3>
+            <p>Turn missing skills into focused learning, project or resume improvements.</p>
+          </div>
+          <div class="card reveal"><span class="num">03</span>
+            <h3>Production-ready direction</h3>
+            <p>The UI can evolve into PDF parsing, Spring Boot, MySQL and AI-powered semantic analysis.</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="skills">
       <div class="wrap">
-        <span class="kicker reveal">04 / toolkit</span>
+        <span class="kicker reveal">05 / toolkit</span>
         <h2 class="section-title reveal">The stack behind the work.</h2>
         <div class="stack reveal">
           <span>Java</span><span>OOP</span><span>Java 8</span><span>Collections</span><span>JDBC</span><span>Spring
@@ -1900,7 +2201,7 @@
 
     <section id="about">
       <div class="wrap">
-        <span class="kicker reveal">05 / about</span>
+        <span class="kicker reveal">06 / about</span>
         <h2 class="section-title reveal">Backend-first. Product-minded.</h2>
         <div class="about">
           <div class="reveal">
@@ -1932,7 +2233,7 @@
 
     <section id="experience">
       <div class="wrap">
-        <span class="kicker reveal">06 / experience</span>
+        <span class="kicker reveal">07 / experience</span>
         <h2 class="section-title reveal">From trainee to software engineer.</h2>
         <p class="section-copy reveal">My professional journey at Tata Consultancy Services began in March 2025, moving
           from Graduate Trainee to Engineer in September 2025.</p>
@@ -2295,6 +2596,87 @@
         }
       });
     }
+
+    /* =========================================
+       RESUME AI ANALYZER
+       Browser-only transparent skill matching
+    ========================================= */
+    (function () {
+      const resumeBtn = document.getElementById('resumeAnalyzeBtn');
+      if (!resumeBtn) return;
+
+      const skills = [
+        'java', 'spring boot', 'spring', 'rest api', 'rest apis', 'sql', 'mysql', 'postgresql',
+        'jpa', 'hibernate', 'jdbc', 'react', 'reactjs', 'javascript', 'typescript', 'html', 'css',
+        'git', 'github', 'maven', 'docker', 'aws', 'kubernetes', 'microservices', 'kafka', 'redis',
+        'python', 'junit', 'agile', 'scrum', 'oop', 'object oriented programming', 'collections'
+      ];
+
+      const display = {
+        java: 'Java', 'spring boot': 'Spring Boot', 'spring': 'Spring', 'rest api': 'REST APIs',
+        'rest apis': 'REST APIs', sql: 'SQL', mysql: 'MySQL', postgresql: 'PostgreSQL', jpa: 'JPA',
+        hibernate: 'Hibernate', jdbc: 'JDBC', react: 'React', reactjs: 'React', javascript: 'JavaScript',
+        typescript: 'TypeScript', html: 'HTML', css: 'CSS', git: 'Git', github: 'GitHub', maven: 'Maven',
+        docker: 'Docker', aws: 'AWS', kubernetes: 'Kubernetes', microservices: 'Microservices',
+        kafka: 'Kafka', redis: 'Redis', python: 'Python', junit: 'JUnit', agile: 'Agile', scrum: 'Scrum',
+        oop: 'OOP', 'object oriented programming': 'OOP', collections: 'Collections'
+      };
+
+      const escapeRegex = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const detect = text => {
+        const normalized = text.toLowerCase();
+        return [...new Set(skills.filter(skill => {
+          const re = new RegExp('(^|[^a-z0-9+#])' + escapeRegex(skill) + '([^a-z0-9+#]|$)', 'i');
+          return re.test(normalized);
+        }))];
+      };
+
+      resumeBtn.addEventListener('click', () => {
+        const resume = document.getElementById('resumeText').value.trim();
+        const job = document.getElementById('jobText').value.trim();
+        const score = document.getElementById('resumeScore');
+        const ring = document.getElementById('resumeScoreRing');
+        const title = document.getElementById('resumeScoreTitle');
+        const text = document.getElementById('resumeScoreText');
+        const matchedBox = document.getElementById('resumeMatched');
+        const gapsBox = document.getElementById('resumeGaps');
+        const recommendation = document.getElementById('resumeRecommendation');
+
+        if (!resume || !job) {
+          score.textContent = '—';
+          title.textContent = 'Both fields are required';
+          text.textContent = 'Paste your resume and the target job description to continue.';
+          return;
+        }
+
+        const resumeSkills = detect(resume);
+        const jobSkills = detect(job);
+        const matched = jobSkills.filter(skill => resumeSkills.includes(skill));
+        const gaps = jobSkills.filter(skill => !resumeSkills.includes(skill));
+        const value = jobSkills.length ? Math.round((matched.length / jobSkills.length) * 100) : 0;
+        const degrees = value * 3.6;
+
+        score.textContent = value + '%';
+        ring.style.background = `conic-gradient(#7c3aed 0deg,#22d3ee ${degrees}deg,rgba(255,255,255,.07) ${degrees}deg)`;
+        title.textContent = value >= 80 ? 'Strong match' : value >= 60 ? 'Good foundation' : value >= 40 ? 'Partial match' : 'Needs work';
+        text.textContent = jobSkills.length
+          ? `Detected ${matched.length} of ${jobSkills.length} target skills in the supplied text.`
+          : 'No supported technical skills were detected in the job description.';
+
+        matchedBox.innerHTML = matched.length
+          ? matched.map(s => `<span>${display[s] || s}</span>`).join('')
+          : '<span class="empty">No direct matches detected</span>';
+
+        gapsBox.innerHTML = gaps.length
+          ? gaps.map(s => `<span class="gap">${display[s] || s}</span>`).join('')
+          : '<span>No major detected gaps</span>';
+
+        recommendation.textContent = gaps.length
+          ? `Prioritize ${gaps.slice(0, 4).map(s => display[s] || s).join(', ')}. Add evidence of these skills through a project, certification, or relevant experience before applying.`
+          : 'Your resume covers the detected technical requirements. Strengthen the result further with measurable impact, relevant responsibilities and role-specific keywords.';
+      });
+    })();
+
   </script>
 </body>
 
