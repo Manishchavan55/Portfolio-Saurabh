@@ -6,7 +6,7 @@ services:
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
-    healthCheckPath: /
+    healthCheckPath: /health
     envVars:
       - key: AI_API_KEY
         sync: false
