@@ -7,16 +7,14 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-ALLOWED_ORIGIN = os.environ.get(
-    "ALLOWED_ORIGIN",
-    "https://manishchavan55.github.io",
-)
-
+# This endpoint is intentionally public because the portfolio is a public
+# GitHub Pages site. No cookies or browser credentials are used by /chat.
+# Allowing cross-origin requests avoids GitHub Pages/Render CORS mismatches.
 CORS(
     app,
     resources={
         r"/chat": {
-            "origins": [ALLOWED_ORIGIN],
+            "origins": "*",
             "methods": ["POST", "OPTIONS"],
             "allow_headers": ["Content-Type"],
         }
@@ -70,7 +68,7 @@ def get_api_key():
 
 
 @app.get("/")
-def health():
+def home():
     return jsonify({
         "status": "ok",
         "service": "Saurabh Portfolio AI API",
