@@ -1,5 +1,4 @@
 import os
-from typing import Tuple
 
 import requests
 from flask import Flask, jsonify, request
@@ -8,9 +7,6 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# The portfolio is hosted on GitHub Pages, so the API must explicitly allow
-# browser requests from the portfolio origin. Keep the OpenRouter key only in
-# Render environment variables; never put it in this repository.
 ALLOWED_ORIGIN = os.environ.get(
     "ALLOWED_ORIGIN",
     "https://manishchavan55.github.io",
@@ -26,7 +22,6 @@ CORS(
         }
     },
 )
-
 
 JARVIS_SYSTEM_PROMPT = """
 You are Saurabh's portfolio AI assistant.
@@ -63,7 +58,6 @@ RULES:
 - Keep normal answers concise, but provide enough detail to be useful.
 """.strip()
 
-
 OPENROUTER_URL = os.environ.get(
     "AI_API_URL",
     "https://openrouter.ai/api/v1/chat/completions",
@@ -71,37 +65,44 @@ OPENROUTER_URL = os.environ.get(
 MODEL = os.environ.get("AI_MODEL", "openrouter/free")
 
 
-def get_api_key() -> str:
+def get_api_key():
     return os.environ.get("AI_API_KEY", "").strip()
 
 
 @app.get("/")
-def health() -> tuple[dict, int]:
-    return {
+def health():
+    return jsonify({
         "status": "ok",
         "service": "Saurabh Portfolio AI API",
         "model": MODEL,
-    }, 200
+    }), 200
+
+
+@app.get("/health")
+def health_check():
+    return jsonify({
+        "status": "ok",
+        "service": "Saurabh Portfolio AI API",
+        "model": MODEL,
+    }), 200
 
 
 @app.post("/chat")
-def chat() -> tuple[dict, int]:
+def chat():
     data = request.get_json(silent=True) or {}
     message = str(data.get("message", "")).strip()
     history = data.get("history", [])
 
     if not message:
-        return {"error": "Message cannot be empty."}, 400
+        return jsonify({"error": "Message cannot be empty."}), 400
 
     api_key = get_api_key()
     if not api_key:
         app.logger.error("AI_API_KEY is not configured on the server.")
-        return {"error": "AI service is not configured."}, 500
+        return jsonify({"error": "AI service is not configured."}), 500
 
     messages = [{"role": "system", "content": JARVIS_SYSTEM_PROMPT}]
 
-    # Accept a small, sanitized conversation history from the portfolio.
-    # Limiting this prevents an unnecessarily large request from the browser.
     if isinstance(history, list):
         for item in history[-10:]:
             if not isinstance(item, dict):
@@ -115,23 +116,16 @@ def chat() -> tuple[dict, int]:
 
     messages.append({"role": "user", "content": message[:4000]})
 
-    payload = {
-        "model": MODEL,
-        "messages": messages,
-    }
-
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://manishchavan55.github.io/Portfolio-Saurabh/",
-        "X-Title": "Saurabh Chavan Portfolio AI",
-    }
-
     try:
         response = requests.post(
             OPENROUTER_URL,
-            json=payload,
-            headers=headers,
+            json={"model": MODEL, "messages": messages},
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "HTTP-Referer": "https://manishchavan55.github.io/Portfolio-Saurabh/",
+                "X-Title": "Saurabh Chavan Portfolio AI",
+            },
             timeout=60,
         )
 
@@ -141,39 +135,38 @@ def chat() -> tuple[dict, int]:
                 response.status_code,
                 response.text,
             )
-            return {
-                "error": f"AI provider returned HTTP {response.status_code}.",
-            }, 502
+            return jsonify({
+                "error": f"AI provider returned HTTP {response.status_code}."
+            }), 502
 
         result = response.json()
         reply = (
             result.get("choices", [{}])[0]
             .get("message", {})
             .get("content", "")
-            .strip()
         )
 
-        if not reply:
+        if not isinstance(reply, str) or not reply.strip():
             app.logger.error("OpenRouter returned no text: %s", result)
-            return {"error": "AI returned an empty response."}, 502
+            return jsonify({"error": "AI returned an empty response."}), 502
 
-        return {"response": reply}, 200
+        return jsonify({"response": reply.strip()}), 200
 
     except requests.exceptions.Timeout:
         app.logger.exception("OpenRouter request timed out.")
-        return {"error": "The AI service took too long to respond."}, 504
+        return jsonify({"error": "The AI service took too long to respond."}), 504
 
     except requests.exceptions.RequestException:
         app.logger.exception("OpenRouter connection failed.")
-        return {"error": "Failed to communicate with the AI service."}, 502
+        return jsonify({"error": "Failed to communicate with the AI service."}), 502
 
     except ValueError:
         app.logger.exception("OpenRouter returned invalid JSON.")
-        return {"error": "The AI service returned invalid data."}, 502
+        return jsonify({"error": "The AI service returned invalid data."}), 502
 
     except Exception:
         app.logger.exception("Unexpected server error.")
-        return {"error": "An internal server error occurred."}, 500
+        return jsonify({"error": "An internal server error occurred."}), 500
 
 
 if __name__ == "__main__":
